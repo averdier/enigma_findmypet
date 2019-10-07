@@ -22,7 +22,7 @@ export const mutations = {
 export const actions = {
     getItems ({ commit }) {
         commit('SET_STATUS', 'loading')
-        return backend.getItems()
+        return backend.getPets()
         .then(pets => {
             commit('SET_STATUS', 'success')
             commit('SET_ITEMS', pets)
@@ -37,5 +37,11 @@ export const actions = {
 
     reset ({ commit }) {
         commit('RESET')
+    }
+}
+
+export const getters = {
+    getItem: (state) => (id) => {
+        return state.items.find(pet => pet.id === id)
     }
 }

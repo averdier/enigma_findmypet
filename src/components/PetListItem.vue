@@ -1,5 +1,5 @@
 <template>
-    <v-list-item @click="">
+    <v-list-item :to="{ name: 'pet-details', params: { id: item.id } }">
         <v-list-item-avatar style="margin-top: 26px;">
             <img v-bind:src="item.picture" />
         </v-list-item-avatar>

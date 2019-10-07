@@ -91,7 +91,7 @@ export default {
       })
 
       const markerClickHandler = (marker, pet) => {
-        map.setZoom(20)
+        map.setZoom(19)
         map.setCenter(marker.getPosition())
         this.selectItem(pet)
       }
