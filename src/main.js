@@ -14,7 +14,7 @@ auth.getUser()
 .then(user => {
   if (user !== null && user !== undefined && !user.expired) {
     store.dispatch('auth/initWithUser', user)
-    router.push({ name: 'home' })
+    router.push({ name: 'empty' })
   }
 })
 
