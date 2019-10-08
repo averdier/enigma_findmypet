@@ -2,7 +2,7 @@
     <v-card class="card-layout">
         <v-card-actions>
             <div class="flex-grow-1"></div>
-            <v-btn icon :to="{ name: 'empty' }">
+            <v-btn v-if="close" icon :to="{ name: 'empty' }">
                 <v-icon>close</v-icon>
             </v-btn>
         </v-card-actions>
@@ -15,7 +15,14 @@
 
 <script>
 export default {
-    name: 'card-layout'
+    name: 'card-layout',
+    props: {
+        close: {
+            type: Boolean,
+            required: false,
+            default: () => true
+        }
+    }
 }
 </script>
 

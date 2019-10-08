@@ -6,14 +6,12 @@
         <div class="gmap" ref="map"></div>
 
         <v-container class="view-container">
-          <v-row>
-            <v-col cols="12">
-              <router-view />
-            </v-col>
+          <v-row :align="align">
+            <router-view />
           </v-row>
         </v-container>
 
-        <v-speed-dial top left direction="bottom"
+        <v-speed-dial v-if="logged" top left direction="bottom"
           transition="slide-y-transition" class="app-button"
           v-model="menu">
 
@@ -34,6 +32,10 @@
             <v-btn fab dark small color="indigo" :to="{ name: 'about' }">
               <v-icon>help_outline</v-icon>
             </v-btn>
+
+            <v-btn fab dark small color="red" :to="{ name: 'logout' }">
+              <v-icon>eject</v-icon>
+            </v-btn>
         </v-speed-dial>
 
       </div>
@@ -51,16 +53,27 @@ export default {
   data: () => ({
     menu: false,
     google: null,
-    map: null
+    map: null,
+    aligns: {
+      'login': 'center',
+      'pet-focus': 'end',
+      'default': 'start'
+    },
+    align: 'start'
   }),
   computed: {
     ...mapState({
-      pets: state => state.pet.items
+      pets: state => state.pet.items,
+      logged: state => state.auth.user !== null
     })
   },
   watch: {
     pets: function () {
       this.drawPets()
+    },
+    '$route': function () {
+      if (this.aligns[this.$route.name] !== undefined) this.align = this.aligns[this.$route.name]
+      else this.align = this.aligns['default']
     }
   },
   methods: {

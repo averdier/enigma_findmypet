@@ -40,6 +40,7 @@ export default {
 
 <style scoped>
 .pet-details-card {
+    width: 100%;
     border-radius: 58.6666666667px !important;
 }
 </style>
