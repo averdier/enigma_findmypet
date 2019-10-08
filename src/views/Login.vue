@@ -1,5 +1,5 @@
 <template>
-    <v-card max-width="560" class="login-card">
+    <v-card max-width="360" class="login-card">
         <v-layout fill-height align-center justify-center style="width: 100%;">
             <v-flex text-center xs11 sm8 md4 lg3>
 

@@ -1,165 +1,119 @@
 <template>
-  <v-app>
-    <v-content>
-      
-      <div class="app-wrapper">
-        <div class="gmap" ref="map"></div>
+    <v-app>
+        <v-content>
 
-        <v-container class="view-container">
-          <v-row :align="align">
-            <router-view />
-          </v-row>
-        </v-container>
+            <!--Map-->
+            <div class="gmap" ref="map"></div>
 
-        <v-speed-dial v-if="logged" top left direction="bottom"
-          transition="slide-y-transition" class="app-button"
-          v-model="menu">
+            <!--App content-->
+            <v-container class="app-container">
+                <v-row :align="currentAlign">
+                    <router-view />
+                </v-row>
+            </v-container>
 
-            <template v-slot:activator>
-              <v-btn v-model="menu" color="teal" dark fab>
-                <v-icon dark>pets</v-icon>
-              </v-btn>
-            </template>
+            <!--App button-->
+            <v-speed-dial v-if="logged" top left direction="bottom"
+                transition="slide-y-transition" class="app-button"
+                v-model="menu">
 
-            <v-btn fab dark small color="indigo" :to="{ name: 'pet-list' }">
-              <v-icon>list</v-icon>
-            </v-btn>
+                <template v-slot:activator>
+                <v-btn v-model="menu" color="teal" dark fab>
+                    <v-icon dark>pets</v-icon>
+                </v-btn>
+                </template>
 
-            <v-btn fab dark small color="indigo" :to="{ name: 'pet-create' }">
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
+                <v-btn fab dark small color="indigo" :to="{ name: 'pet-list' }">
+                <v-icon>list</v-icon>
+                </v-btn>
 
-            <v-btn fab dark small color="indigo" :to="{ name: 'about' }">
-              <v-icon>help_outline</v-icon>
-            </v-btn>
+                <v-btn fab dark small color="indigo" :to="{ name: 'pet-create' }">
+                <v-icon>mdi-plus</v-icon>
+                </v-btn>
 
-            <v-btn fab dark small color="red" :to="{ name: 'logout' }">
-              <v-icon>eject</v-icon>
-            </v-btn>
-        </v-speed-dial>
+                <v-btn fab dark small color="indigo" :to="{ name: 'about' }">
+                <v-icon>help_outline</v-icon>
+                </v-btn>
 
-      </div>
-     
-    </v-content>
-  </v-app>
+                <v-btn fab dark small color="red" :to="{ name: 'logout' }">
+                <v-icon>eject</v-icon>
+                </v-btn>
+            </v-speed-dial>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import gmapsInit from '@/utils/gmaps'
+import { mapMixin } from '@/mixins/mapMixin'
 
 export default {
-  name: 'App',
-  data: () => ({
-    menu: false,
-    google: null,
-    map: null,
-    aligns: {
-      'login': 'center',
-      'pet-focus': 'end',
-      'default': 'start'
+    name: 'App',
+    mixins: [mapMixin],
+    data: () => ({
+        menu: false,
+        alignPerPage: {
+            'pet-focus': 'end',
+            'default': 'end'
+        },
+        currentAlign: 'center'
+    }),
+    computed: mapState({
+        logged: state => state.auth.user !== null,
+        pets: state => state.pet.items
+    }),
+    watch: {
+        logged: function (value) { if (value) this.$store.dispatch('pet/getItems') },
+        pets: function () { this.drawPets() },
+        '$route': function () {
+            if (this.alignPerPage[this.$route.name] !== undefined) this.currentAlign = this.alignPerPage[this.$route.name]
+            else this.currentAlign = this.alignPerPage['default']
+        }
     },
-    align: 'start'
-  }),
-  computed: {
-    ...mapState({
-      pets: state => state.pet.items,
-      logged: state => state.auth.user !== null
-    })
-  },
-  watch: {
-    pets: function () {
-      this.drawPets()
+    methods: {
+        drawPets () {
+            const markers = []
+            this.pets.forEach(pet => {
+                const marker = {
+                    position: pet.location.position,
+                    action: () => {
+                        this.centerOnPosition(pet.location.position)
+                        this.$router.push({ name: 'pet-focus', params: { id: pet.id }})
+                    }
+                }
+                markers.push(marker)
+            })
+            this.drawMarkers(markers)
+        }
     },
-    logged: function (value) {
-      if (value) {
-        this.$store.dispatch('pet/getItems')
-      }
-    },
-    '$route': function () {
-      if (this.aligns[this.$route.name] !== undefined) this.align = this.aligns[this.$route.name]
-      else this.align = this.aligns['default']
+    async mounted () {
+        await this.initMap()
+        this.centerOnLille()
     }
-  },
-  methods: {
-    initMap () {
-      if (this.google !== null) {
-        this.map = new this.google.maps.Map(this.$refs.map, {
-          disableDefaultUI: true
-        })
-        const geocoder = new this.google.maps.Geocoder()
-
-        geocoder.geocode({ address: 'Lille' }, (results, status) => {
-        if (status !== `OK` || !results[0]) throw new Error(status)
-          this.map.setCenter(results[0].geometry.location)
-          this.map.fitBounds(results[0].geometry.viewport)
-        })
-
-        this.drawPets()
-      }
-    },
-
-    drawPets () {
-      if (this.google !== null && this.map !== null) {
-        const markers = []
-        this.pets.forEach(pet => {
-          const marker = new this.google.maps.Marker({
-            position: pet.location.position,
-            map: this.map
-          })
-          marker.addListener('click', () => this.onMarkerClick(marker, pet))
-          markers.push(marker)
-        })
-      }
-    },
-
-    onMarkerClick (marker, pet) {
-      if (this.map !== null) {
-        this.map.setZoom(19)
-        this.map.setCenter(marker.getPosition())
-      }
-      this.$router.push({ name: 'pet-focus', params: { id: pet.id }})
-    }
-  },
-
-  async mounted () {
-    try {
-      this.google = await gmapsInit()
-      this.initMap()
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-};
+}
 </script>
 
 <style>
-.app-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+/* Fix app button at top */
 .app-button {
   position: absolute !important;
 }
-.view-container {
-  height: 100%;
-  padding-top: 80px !important;
-  align-items: top !important;
-  display: flex;
-}
+
+/* Fullscreen map */
 .gmap {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-
-.v-speed-dial__list {
-  padding-left: 2px !important;
-  align-items: unset !important;
+/* Fullscreen app */
+.app-container {
+    height: 100%;
+    display: flex;
+    padding-bottom: 26px !important;
 }
+
+/* Reduce container max size on desktop */
 @media (min-width: 960px) {
   .container {
       max-width: 850px !important;

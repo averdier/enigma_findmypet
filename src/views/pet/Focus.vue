@@ -1,6 +1,6 @@
 <template>
     <v-card class="pet-details-card">
-        <v-list v-if="item !== undefined" three-line rounded>
+        <v-list v-if="item !== undefined" two-line rounded>
             <pet-list-item :item="item" />
         </v-list>
     </v-card>
@@ -39,6 +39,7 @@ export default {
 </script>
 
 <style scoped>
+/* Full with, round borders */
 .pet-details-card {
     width: 100%;
     border-radius: 58.6666666667px !important;

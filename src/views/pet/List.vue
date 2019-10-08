@@ -1,8 +1,8 @@
 <template>
-  <card-layout>
+  <card-layout title="Pets">
 
     <template v-if="status === 'success'">
-      <v-list v-if="items.length > 0" three-line rounded>
+      <v-list v-if="items.length > 0" two-line rounded>
         <pet-list-item v-for="(pet, key) in items" :item="pet" :key="key" />
       </v-list>
       <v-layout v-else justify-center align-center fill-height>

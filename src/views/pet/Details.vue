@@ -1,16 +1,27 @@
 <template>
-  <card-layout>
+  <card-layout title="Details">
     <template v-if="item !== undefined">
 
-      <v-list-item>
-        <v-list-item-avatar>
-            <img v-bind:src="item.picture" />
-        </v-list-item-avatar>
+        <!--Header-->
+        <v-list-item>
+            <v-list-item-avatar>
+                <img v-bind:src="item.picture" />
+            </v-list-item-avatar>
 
-        <v-list-item-content>
-            <v-list-item-title>{{ item.name }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+            <v-list-item-content>
+                <v-list-item-title>{{ item.name }}</v-list-item-title>
+                <v-list-item-subtitle><span class='text--primary'>Last update:</span> {{ item.location.at }}</v-list-item-subtitle>
+            </v-list-item-content>
+        </v-list-item>
+
+        <div class="details-container">
+
+            <!--Position-->
+            <pre>{{ item.location.position }}</pre>
+
+            <!--Description-->
+            <p>{{ item.description }}</p>
+        </div>
       
     </template>
   </card-layout>
@@ -47,3 +58,14 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+/* Align details with avatar */
+.details-container {
+    margin: 8px 16px 0 16px;
+}
+
+.details-container > p {
+    margin-top: 8px;
+}
+</style>

@@ -1,44 +1,59 @@
 <template>
-  <card-layout>
+  <card-layout title="Create Pet">
+
+    <v-progress-linear
+      :active="status === 'loading'"
+      :indeterminate="status === 'loading'"
+      absolute
+      top
+      color="primary"></v-progress-linear>
 
     <v-form ref="createPetForm" @click="submit">
 
       <v-text-field label="Name"
         v-model="form.name"
+        :disabled="status === 'loading'"
         :error-messages="nameErrors"
         @input="$v.form.name.$touch()"
         @blur="$v.form.name.$touch()" />
 
       <v-text-field label="Serial"
         v-model="form.serial"
+        :disabled="status === 'loading'"
         :error-messages="serialErrors"
         @input="$v.form.serial.$touch()"
         @blur="$v.form.serial.$touch()" />
 
       <v-text-field label="Picture"
         v-model="form.picture"
+        :disabled="status === 'loading'"
         :error-messages="pictureErrors"
         @input="$v.form.serial.$touch()"
         @blur="$v.form.serial.$touch()" />
 
       <v-textarea label="Description"
         v-model="form.description"
+        :disabled="status === 'loading'"
         :error-messages="descriptionErrors"
         @input="$v.form.description.$touch()"
         @blur="$v.form.description.$touch()" />
 
-      <v-btn text color="primary" @click="submit">Create</v-btn>
     </v-form>
+
+    <template v-slot:actions>
+      <v-btn text color="primary" @click="submit" :disabled="status === 'loading'">Create</v-btn>
+    </template>
 
   </card-layout>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import CardLayout from '@/components/CardLayout.vue'
 
-const betweenLength = (min, max) => (value) => value.length >= min && value.length <= max
+const betweenLength = (min, max) => (value) => value !== null && value.length >= min && value.length <= max
 
 export default {
   name: 'pet-create',
@@ -72,6 +87,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      status: state => state.pet.createStatus
+    }),
     nameErrors () {
       const errors = []
       if (!this.$v.form.name.$dirty) return errors
@@ -109,9 +127,7 @@ export default {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.$store.dispatch('pet/createItem', this.form)
-        .then(() => {
-          console.log('success')
-        })
+        .then((pet) => { this.$router.push({ name: 'pet-focus', params: { id: pet.id } }) })
         .catch(error => {
           console.log(error)
         })

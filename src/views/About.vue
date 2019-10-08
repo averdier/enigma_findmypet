@@ -1,33 +1,22 @@
 <template>
-  <card-layout>
-    <v-container grid-list-lg>
-      <v-layout :justify-center="!onMobile" :align-center="!onMobile" wrap>
-        <v-flex sm12 md4 lg3 v-for="(item, key) in devs" :key="key">
-            <v-card flat>
-              <template v-if="!onMobile">
-                <v-img :src="item.avatar" contain max-height="240">
-                  <template v-slot:placeholder>
-                    <v-layout fill-height align-center justify-center ma-0>
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-layout>
-                  </template>
-                </v-img>
+  <card-layout title="About">
+    <v-list two-line subheader>
+      <v-subheader>Developpers</v-subheader>
 
-                <v-card-title>{{ item.name }}</v-card-title>
-              </template>
+      <v-list-item v-for="(item, key) in devs" :key="key">
 
-              <v-list-item three-line v-else>
-                <v-list-item-avatar size="125" tile>
-                  <v-img :src="item.avatar"></v-img>
-                </v-list-item-avatar>
-                <v-list-item-content class="align-self-start">
-                  <v-list-item-title class="headline mb-2" v-text="item.name"></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+        <v-list-item-avatar>
+            <img v-bind:src="item.avatar" />
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title>{{ item.name }}</v-list-item-title>
+          <v-list-item-subtitle>{{ item.github }}</v-list-item-subtitle>
+        </v-list-item-content>
+
+      </v-list-item>
+
+    </v-list>
   </card-layout>
 </template>
 
