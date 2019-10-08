@@ -31,4 +31,7 @@ export default {
     width: 100%;
     height: 100%;
 }
+.v-card__text {
+    height: 100% !important;
+}
 </style>>

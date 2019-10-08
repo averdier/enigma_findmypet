@@ -13,7 +13,7 @@ const apiClient = axios.create({
 export default {
     instance: apiClient,
 
-    getPets () {
+    /*getPets () {
         return new Promise((resolve) => {
             resolve(
                 [
@@ -44,5 +44,15 @@ export default {
                 ]
             )
         })
+    }*/
+
+    getPets () {
+        return this.instance.get('/pet')
+        .then(response => response.data)
+    },
+
+    createPet (payload) {
+        return this.instance.post('/pet', payload)
+        .then(response => response.data)
     }
 }

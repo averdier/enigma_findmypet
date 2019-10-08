@@ -71,6 +71,11 @@ export default {
     pets: function () {
       this.drawPets()
     },
+    logged: function (value) {
+      if (value) {
+        this.$store.dispatch('pet/getItems')
+      }
+    },
     '$route': function () {
       if (this.aligns[this.$route.name] !== undefined) this.align = this.aligns[this.$route.name]
       else this.align = this.aligns['default']
@@ -115,10 +120,6 @@ export default {
       }
       this.$router.push({ name: 'pet-focus', params: { id: pet.id }})
     }
-  },
-
-  created () {
-    this.$store.dispatch('pet/getItems')
   },
 
   async mounted () {

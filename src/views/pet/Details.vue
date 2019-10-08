@@ -24,7 +24,7 @@ export default {
   components: { CardLayout },
   props: {
         id: {
-            type: Number,
+            type: String,
             required: true
         }
     },

@@ -5,8 +5,10 @@ import store from '@/store'
 import auth from '@/services/auth'
 import './registerServiceWorker'
 import vuetify from './plugins/vuetify';
+import Vuelidate from 'vuelidate'
 
 Vue.config.productionTip = false
+Vue.use(Vuelidate)
 
 auth.getUser()
 .then(user => {
