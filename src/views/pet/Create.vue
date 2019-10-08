@@ -67,7 +67,7 @@ export default {
       },
       description: {
         required,
-        between: betweenLength(3, 32)
+        between: betweenLength(3, 512)
       }
     }
   },
