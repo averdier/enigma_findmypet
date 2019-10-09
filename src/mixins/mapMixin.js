@@ -11,11 +11,14 @@ export const mapMixin = {
     methods: {
         async initMap () {
             this.google = await gmapsInit()
+            let styledMapType = new google.maps.StyledMapType(require('../assets/mapStyle.json'))
             this.map = new this.google.maps.Map(this.$refs[this.mapRef], {
                 mapTypeControl: false,
                 streetViewControl: false,
                 fullscreenControl: false
             })
+            this.map.mapTypes.set('styled_map', styledMapType);
+            this.map.setMapTypeId('styled_map');
         },
 
         centerOnLille () {
