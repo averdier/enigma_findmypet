@@ -18,24 +18,24 @@
                 v-model="menu">
 
                 <template v-slot:activator>
-                <v-btn v-model="menu" color="teal" dark fab>
+                <v-btn v-model="menu" color="#FF9100" dark fab>
                     <v-icon dark>pets</v-icon>
                 </v-btn>
                 </template>
 
-                <v-btn fab dark small color="indigo" :to="{ name: 'pet-list' }">
+                <v-btn fab dark small color="#B36500" :to="{ name: 'pet-list' }">
                     <v-icon>list</v-icon>
                 </v-btn>
 
-                <v-btn fab dark small color="indigo" :to="{ name: 'pet-create' }">
+                <v-btn fab dark small color="#B36500" :to="{ name: 'pet-create' }">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
 
-                <v-btn fab dark small color="indigo" :to="{ name: 'about' }">
+                <v-btn fab dark small color="#B36500" :to="{ name: 'about' }">
                     <v-icon>help_outline</v-icon>
                 </v-btn>
 
-                <v-btn fab dark small color="indigo" :to="{ name: 'settings' }">
+                <v-btn fab dark small color="#B36500" :to="{ name: 'settings' }">
                     <v-icon>settings</v-icon>
                 </v-btn>
 
