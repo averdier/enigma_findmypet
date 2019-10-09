@@ -19,6 +19,8 @@
             <!--Position-->
             <pre>{{ item.location.position }}</pre>
 
+            <!--Level-->
+            <p>Battery level: {{ level }}</p>
             <!--Description-->
             <p>{{ item.description }}</p>
         </div>
@@ -40,7 +42,9 @@ export default {
         }
     },
     data: () => ({
-        item: undefined
+        item: undefined,
+        myCharacteristic: null,
+        level: 100
     }),
     watch: {
         id: function () {
@@ -51,10 +55,45 @@ export default {
         updateItem () {
             this.item = this.$store.getters['pet/getItem'](this.id)
             if (this.item === undefined) this.$router.push({ name: 'empty' })
+        },
+        handleBatteryLevel (event) {
+            let value = event.target.value
+            let a = []
+            for (let i = 0; i < value.byteLength; i++) {
+                a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+            }
+            this.level = a
         }
     },
     created () {
         this.updateItem()
+    },
+    mounted () {
+        navigator.bluetooth.requestDevice({filters: [{services: ['battery_service']}]})
+        .then(device => {
+            return device.gatt.connect()
+        })
+        .then(server => {
+            return server.getPrimaryService('battery_service')
+        })
+        .then(service => {
+            return service.getCharacteristic('battery_level')
+        })
+        .then(characteristic => {
+            this.myCharacteristic = characteristic
+            return this.myCharacteristic.startNotifications()
+            .then(() => {
+                this.myCharacteristic.addEventListener('characteristicvaluechanged', this.handleBatteryLevel)
+            })
+        })
+    },
+    destroyed () {
+        if (this.myCharacteristic !== null) {
+            this.myCharacteristic.stopNotifications()
+            .then(() => {
+                this.myCharacteristic.removeEventListener('characteristicvaluechanged', this.handleBatteryLevel)
+            })
+        }
     }
 }
 </script>
