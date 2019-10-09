@@ -25,7 +25,7 @@ Bienvenue sur **FindMyPet**, la première application de géolocalisation des vo
 - [] Editer un animal
 - [] Supprimer un animal
 
-# Variables d'environnement
+## Variables d'environnement
 
 Quelques variables d'environnements sont disponibles afin de modeler l'application à votre convenance.
 
