@@ -24,21 +24,26 @@
                 </template>
 
                 <v-btn fab dark small color="indigo" :to="{ name: 'pet-list' }">
-                <v-icon>list</v-icon>
+                    <v-icon>list</v-icon>
                 </v-btn>
 
                 <v-btn fab dark small color="indigo" :to="{ name: 'pet-create' }">
-                <v-icon>mdi-plus</v-icon>
+                    <v-icon>mdi-plus</v-icon>
                 </v-btn>
 
                 <v-btn fab dark small color="indigo" :to="{ name: 'about' }">
-                <v-icon>help_outline</v-icon>
+                    <v-icon>help_outline</v-icon>
+                </v-btn>
+
+                <v-btn fab dark small color="indigo" :to="{ name: 'settings' }">
+                    <v-icon>settings</v-icon>
                 </v-btn>
 
                 <v-btn fab dark small color="red" :to="{ name: 'logout' }">
-                <v-icon>eject</v-icon>
+                    <v-icon>eject</v-icon>
                 </v-btn>
             </v-speed-dial>
+
         </v-content>
     </v-app>
 </template>

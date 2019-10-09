@@ -54,5 +54,22 @@ export default {
     createPet (payload) {
         return this.instance.post('/pet', payload)
         .then(response => response.data)
+    },
+
+    pushSubscribe (subscription) {
+        const temp = JSON.parse(JSON.stringify(subscription))
+
+        return this.instance.post('/subscription', {
+            endpoint: temp.endpoint,
+            expiration_time: temp.expirationTime,
+            keys: {
+                p256dh: temp.keys.p256dh,
+                auth: temp.keys.auth
+            }
+        })
+    },
+
+    pushUnsubscribe (endpoint) {
+        return this.instance.delete('/subscription', { data: { endpoint: endpoint } })
     }
 }
