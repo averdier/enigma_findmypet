@@ -2,7 +2,8 @@ const defaultState = () => {
     const localState = JSON.parse(localStorage.getItem(`${process.env.VUE_APP_NAME}-settings`))
     if (localState !== null) return localState
     else return {
-        push: true
+        push: true,
+        bluetooth: false
     }
 }
 

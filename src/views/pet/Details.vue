@@ -16,11 +16,13 @@
 
         <div class="details-container">
 
+            <!--Level-->
+            <p v-if="$store.state.setting.bluetooth">Battery level: <font-awesome-icon :icon="batteryIcon" /></p>
+            <p v-else>Battery level: Bluetooth not activated (see: <router-link :to="{ name: 'settings' }">Settings</router-link>)</p>
+
             <!--Position-->
             <pre>{{ item.location.position }}</pre>
 
-            <!--Level-->
-            <p>Battery level: {{ level }}</p>
             <!--Description-->
             <p>{{ item.description }}</p>
         </div>
@@ -46,6 +48,26 @@ export default {
         myCharacteristic: null,
         level: 100
     }),
+    computed: {
+        batteryIcon () {
+            if (this.level === 0) {
+                return 'battery-empty'
+            }
+            else if (this.level === 25) {
+                return 'battery-quarter'
+            }
+            else if (this.level === 50) {
+                return 'battery-half'
+            }
+            else if (this.level === 75) {
+                return 'battery-three-quarters'
+            }
+            else if (this.level === 100) {
+                return 'battery-full'
+            }
+            return ''
+        }
+    },
     watch: {
         id: function () {
             this.updateItem()
@@ -62,30 +84,47 @@ export default {
             for (let i = 0; i < value.byteLength; i++) {
                 a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
             }
-            this.level = a
+            if (a[0] === '0x00')  {
+                this.level = 0
+            }
+            else if (a[0] === '0x19')  {
+                this.level = 25
+            }
+            else if (a[0] === '0x32')  {
+                this.level = 50
+            }
+            else if (a[0] === '0x4b')  {
+                this.level = 75
+            }
+            else if (a[0] === '0x64')  {
+                this.level = 100
+            }
         }
     },
     created () {
         this.updateItem()
     },
     mounted () {
-        navigator.bluetooth.requestDevice({filters: [{services: ['battery_service']}]})
-        .then(device => {
-            return device.gatt.connect()
-        })
-        .then(server => {
-            return server.getPrimaryService('battery_service')
-        })
-        .then(service => {
-            return service.getCharacteristic('battery_level')
-        })
-        .then(characteristic => {
-            this.myCharacteristic = characteristic
-            return this.myCharacteristic.startNotifications()
-            .then(() => {
-                this.myCharacteristic.addEventListener('characteristicvaluechanged', this.handleBatteryLevel)
+        if (this.$store.state.setting.bluetooth) {
+            navigator.bluetooth.requestDevice({filters: [{services: ['battery_service']}]})
+            .then(device => {
+                return device.gatt.connect()
             })
-        })
+            .then(server => {
+                return server.getPrimaryService('battery_service')
+            })
+            .then(service => {
+                return service.getCharacteristic('battery_level')
+            })
+            .then(characteristic => {
+                this.myCharacteristic = characteristic
+                return this.myCharacteristic.startNotifications()
+                .then(() => {
+                    this.myCharacteristic.addEventListener('characteristicvaluechanged', this.handleBatteryLevel)
+                })
+            })
+        }
+        
     },
     destroyed () {
         if (this.myCharacteristic !== null) {

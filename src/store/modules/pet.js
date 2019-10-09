@@ -13,6 +13,13 @@ export const mutations = {
     SET_STATUS (state, status) { state.status = status },
     SET_CREATE_STATUS (state, status) { state.createStatus = status },
     SET_ITEMS (state, items) { state.items = items },
+    REPLACE (state, { old, value }) {
+        const i = state.items.indexOf(old)
+        if (i > -1) {
+            state.items.splice(i, 1, value)
+            console.log('pet updated')
+        }
+    },
     RESET (state) {
         const ds = defaultState()
         Object.keys(ds).forEach(key => {
@@ -26,10 +33,14 @@ export const actions = {
         commit('SET_STATUS', 'loading')
         return backend.getPets()
         .then(data => {
+            const pets = data.pets.map(pet => {
+                pet.battery = -1
+                return pet
+            })
             commit('SET_STATUS', 'success')
-            commit('SET_ITEMS', data.pets)
+            commit('SET_ITEMS', pets)
 
-            return data
+            return pets
         })
         .catch(error => {
             commit('SET_STATUS', 'error')
@@ -49,6 +60,10 @@ export const actions = {
             commit('SET_CREATE_STATUS', 'error')
             throw error
         })
+    },
+
+    replaceItem ({ commit }, { old, value }) {
+        commit('REPLACE', { old, value })
     },
 
     reset ({ commit }) {

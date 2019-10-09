@@ -10,12 +10,8 @@ import * as setting from './modules/setting'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-
-  },
-  mutations: {
-
-  },
+  state: {},
+  mutations: {},
   actions: {
     reset ({ dispatch }) {
       dispatch('pet/reset')
@@ -24,7 +20,7 @@ export default new Vuex.Store({
       dispatch('worker/reset')
       dispatch('subscription/reset')
       dispatch('setting/reset')
-    }
+    },
   },
   modules: { worker, pet, alert, subscription, setting, auth }
 })

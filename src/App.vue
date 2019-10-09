@@ -61,15 +61,22 @@ export default {
             'pet-focus': 'end',
             'default': 'end'
         },
-        currentAlign: 'center'
+        currentAlign: 'center',
+        bluetoothInit: false
     }),
     computed: mapState({
         logged: state => state.auth.user !== null,
         pets: state => state.pet.items
     }),
     watch: {
-        logged: function (value) { if (value) this.$store.dispatch('pet/getItems') },
-        pets: function () { this.drawPets() },
+        logged: function (value) { 
+            if (value) { 
+                this.$store.dispatch('pet/getItems')
+            }
+        },
+        pets: function () { 
+            this.drawPets()
+        },
         '$route': function () {
             if (this.alignPerPage[this.$route.name] !== undefined) this.currentAlign = this.alignPerPage[this.$route.name]
             else this.currentAlign = this.alignPerPage['default']
@@ -94,6 +101,10 @@ export default {
     async mounted () {
         await this.initMap()
         this.centerOnLille()
+
+    },
+    destroyed () {
+       this.$store.dispatch('reset')
     }
 }
 </script>
