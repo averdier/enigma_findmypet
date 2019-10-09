@@ -13,6 +13,7 @@ const PetCreate = () => import('./views/pet/Create.vue')
 const PetFocus = () => import('./views/pet/Focus.vue')
 const PetDetails = () => import('./views/pet/Details.vue')
 const About = () => import('./views/About.vue')
+const Settings = () => import('./views/Settings.vue')
 
 const authGuard = (to, from, next) => {
   if (Store.state.auth.user !== null) next()
@@ -76,6 +77,12 @@ export default new Router({
       component: PetDetails,
       beforeEnter: canAccessToItemGuard,
       props: true
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings,
+      beforeEnter: authGuard
     },
     {
       path: '/login',
