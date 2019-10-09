@@ -1,6 +1,6 @@
 {
-  "name": "enigma_findmypet",
-  "short_name": "enigma_findmypet",
+  "name": "FindMyPet",
+  "short_name": "FindMyPet",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
