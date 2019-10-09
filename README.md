@@ -2,7 +2,7 @@
 
 ![logo](./docs/img/logo.jpg)
 
-Demo: [FindMyPet](https://www.30millionsdamis.fr/uploads/pics/conseils-erreurs-chat-1171.jpg)
+Demo: [FindMyPet](https://findmypet.netlify.com)
 > Invitation obligatoire
 
 Backend: [enginma_findmypet_backend](https://github.com/averdier/enigma_findmypet_backend)
@@ -10,6 +10,11 @@ Backend: [enginma_findmypet_backend](https://github.com/averdier/enigma_findmype
 Design: [présentation](./docs/desgin.pptx)
 
 Bienvenue sur **FindMyPet**, la première application de géolocalisation des vos animaux avec des puces de traçage à très grande autonomie. **FindMyPet** utilise les technologies SIGFox et Bluetooth 5 afin de posséder un des meilleurs réseau de couverture, mais surtout, une des technologie les moins énergivore du marché.
+
+Groupe :
+- [Arthur Verdier](https://github.com/averdier)
+- [Romain Verdin](https://github.com/romoliere)
+- [Rémi Lardier](https://github.com/remi0411)
 
 ## Statut
 
@@ -29,7 +34,7 @@ Bienvenue sur **FindMyPet**, la première application de géolocalisation des vo
 
 Quelques variables d'environnements sont disponibles afin de modeler l'application à votre convenance.
 
-|NOM|DESCRIPTION|Exemple|
+|Nom|Description|Exemple|
 |----------------|-------------------------------|-----------------------------|
 |VUE_APP_NAME|Nom d'affichage de l'application|FindMyPet|
 |VUE_APP_BASE_URL|Chemin d'accès relatif à l'application front|"/app"|
