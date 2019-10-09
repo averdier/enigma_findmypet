@@ -8,6 +8,9 @@ Backend: [enginma_findmypetbackend](https://github.com/averdier/enigma_findmypet
 Bienvenue sur **FindMyPet**, la première application de géolocalisation des vos animaux avec des puces de traçage à très grande autonomie. **FindMyPet** utilise les technologies SIGFox et Bluetooth 5 afin de posséder un des meilleurs réseau de couverture, mais surtout, une des technologie les moins énergivore du marché.
 
 ## Statut
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d23f25a4-6cf9-4d46-a57a-8b115c9b53f1/deploy-status)](https://app.netlify.com/sites/findmypet/deploys)
+
 - [x] Service worker
 - [x] Bluetooth
 - [x] Notifications push
