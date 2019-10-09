@@ -26,5 +26,5 @@ export default new Vuex.Store({
       dispatch('setting/reset')
     }
   },
-  modules: { worker, pet, alert, subscription, auth }
+  modules: { worker, pet, alert, subscription, setting, auth }
 })
