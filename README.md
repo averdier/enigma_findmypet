@@ -1,9 +1,13 @@
 # FindMyPet
 
+![logo](./docs/img/logo.jpg)
+
 Demo: [FindMyPet](https://www.30millionsdamis.fr/uploads/pics/conseils-erreurs-chat-1171.jpg)
 > Invitation obligatoire
 
 Backend: [enginma_findmypetbackend](https://github.com/averdier/enigma_findmypet_backend)
+
+Design: [présentation](./docs/desgin.pptx)
 
 Bienvenue sur **FindMyPet**, la première application de géolocalisation des vos animaux avec des puces de traçage à très grande autonomie. **FindMyPet** utilise les technologies SIGFox et Bluetooth 5 afin de posséder un des meilleurs réseau de couverture, mais surtout, une des technologie les moins énergivore du marché.
 
@@ -27,16 +31,16 @@ Quelques variables d'environnements sont disponibles afin de modeler l'applicati
 
 |NOM|DESCRIPTION|Exemple|
 |----------------|-------------------------------|-----------------------------|
-|VUE_APP_NAME|`Nom d'affichage de l'application`|FindMyPet|
-|VUE_APP_BASE_URL|`Chemin d'accès relatif à l'application front`|"/app"|
-|VUE_APP_PUSH_SERVER_KEY|`Clé pour les notifications push`|BDl0cLpGC_-qNSrk-jbT0|
-|VUE_APP_BACKEND|`Adresse du WebService REST`|https://fgmzkcbaka.execute-api.eu-central-1.amazonaws.com/dev/api|
-|VUE_APP_AUTH_ISSUER|`Identifiant du fournisseur de l'identité OIDC`|https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_4Q91wIB8X|
-|VUE_APP_AUTH_BACKEND|`Adresse de base pour les actions OIDC`|https://rastadev.auth.eu-central-1.amazoncognito.com|
-|VUE_APP_AUTH_ID|`Identifiant unique pour le client OIDC`|5cceqh6ihehe2121r6k9nbu5r **(fake value)**|
-|VUE_APP_AUTH_SECRET|`Mot de passe pour le client OIDC`|e2jg7up9vp4hei68jcondq8t9gpk **(fake value)**|
-|VUE_APP_AUTH_LOGIN_CALLBACK|`Adresse de callback pour l'action de connexion`|https://findmypet.netlify.com/oidc/login
-|VUE_APP_AUTH_LOGOUT_CALLBACK|`Adresse de callback pour l'action de déconnexion`|https://findmypet.netlify.com/oidc/logout|
+|VUE_APP_NAME|Nom d'affichage de l'application|FindMyPet|
+|VUE_APP_BASE_URL|Chemin d'accès relatif à l'application front|"/app"|
+|VUE_APP_PUSH_SERVER_KEY|Clé pour les notifications push|BDl0cLpGC_-qNSrk-jbT0|
+|VUE_APP_BACKEND|Adresse du WebService REST|https://fgmzkcbaka.execute-api.eu-central-1.amazonaws.com/dev/api|
+|VUE_APP_AUTH_ISSUER|Identifiant du fournisseur de l'identité OIDC|https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_4Q91wIB8X|
+|VUE_APP_AUTH_BACKEND|Adresse de base pour les actions OIDC|https://rastadev.auth.eu-central-1.amazoncognito.com|
+|VUE_APP_AUTH_ID|Identifiant unique pour le client OIDC|5cceqh6ihehe2121r6k9nbu5r **(fake value)**|
+|VUE_APP_AUTH_SECRET|Mot de passe pour le client OIDC|e2jg7up9vp4hei68jcondq8t9gpk **(fake value)**|
+|VUE_APP_AUTH_LOGIN_CALLBACK|Adresse de callback pour l'action de connexion|https://findmypet.netlify.com/oidc/login
+|VUE_APP_AUTH_LOGOUT_CALLBACK|Adresse de callback pour l'action de déconnexion|https://findmypet.netlify.com/oidc/logout|
 
 ## Utilisation
 
@@ -78,6 +82,13 @@ Quelques variables d'environnements sont disponibles afin de modeler l'applicati
 
 ![settings](./docs/img/settings.jpg)
 > Paramètres de l'application
+
+
+![about](./docs/img/about.jpg)
+> A propos de nous
+
+![notification](./docs/img/notification.jpg)
+> Notification push
 
 ## Installation
 ```
