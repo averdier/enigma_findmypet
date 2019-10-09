@@ -11,7 +11,7 @@ export const mapMixin = {
     methods: {
         async initMap () {
             this.google = await gmapsInit()
-            let styledMapType = new google.maps.StyledMapType(require('../assets/mapStyle.json'))
+            let styledMapType = new this.google.maps.StyledMapType(require('../assets/mapStyle.json'))
             this.map = new this.google.maps.Map(this.$refs[this.mapRef], {
                 mapTypeControl: false,
                 streetViewControl: false,
